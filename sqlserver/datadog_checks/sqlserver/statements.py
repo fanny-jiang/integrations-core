@@ -81,7 +81,6 @@ select
             - statement_start_offset) / 2) + 1) AS statement_text,
     qt.text,
     encrypted as is_encrypted,
-    (SELECT IIF (EXISTS (SELECT 1 FROM sys.dm_exec_procedure_stats proc_stats WHERE proc_stats.plan_handle = qstats_aggr_split.plan_handle), 1, 0)) as is_proc,
     * from qstats_aggr_split
     cross apply sys.dm_exec_sql_text(plan_handle) qt
 """
@@ -114,7 +113,6 @@ select
     END - statement_start_offset) / 2) + 1) AS statement_text,
     qt.text,
     encrypted as is_encrypted,
-    (SELECT IIF (EXISTS (SELECT 1 FROM sys.dm_exec_procedure_stats proc_stats WHERE proc_stats.plan_handle = qstats_aggr_split.plan_handle), 1, 0)) as is_proc,
     * from qstats_aggr_split
     cross apply sys.dm_exec_sql_text(plan_handle) qt
 """
@@ -244,6 +242,15 @@ class SqlserverStatementMetrics(DBMAsyncJob):
         self.log.debug("found available sys.dm_exec_query_stats columns: %s", available_columns)
         return available_columns
 
+    # only works for non-encrypted procedures, but if
+    # text is encrypted, we will use the plan_handle as the RL
+    # key to decide when to lookup the plan
+    @staticmethod
+    def _get_is_proc(row):
+        if not row['is_encrypted']:
+            return "CREATE PROCEDURE" in row['text']
+        return False
+
     def _get_statement_metrics_query_cached(self, cursor):
         if self._statement_metrics_query:
             return self._statement_metrics_query
@@ -284,6 +291,7 @@ class SqlserverStatementMetrics(DBMAsyncJob):
             try:
                 statement = obfuscate_sql_with_metadata(row['statement_text'], self.check.obfuscator_options)
                 procedure_statement = None
+                row['is_proc'] = self._get_is_proc(row)
                 if row['is_proc'] and 'text' in row:
                     procedure_statement = obfuscate_sql_with_metadata(row['text'], self.check.obfuscator_options)
             except Exception as e:
@@ -443,8 +451,8 @@ class SqlserverStatementMetrics(DBMAsyncJob):
             # for stored procedures, we only want to look up plans for the entire procedure
             # not every query that is executed within the proc. In order to accomplish this,
             # we use the procedure_signature as the plan key
-            if row['is_proc']:
-                plan_key = row['procedure_signature']
+            if row['is_proc'] or row['is_encrypted']:
+                plan_key = row['plan_handle'][0:16]
             if self._seen_plans_ratelimiter.acquire(plan_key):
                 raw_plan, is_plan_encrypted = self._load_plan(row['plan_handle'], cursor)
                 obfuscated_plan, collection_errors = None, None

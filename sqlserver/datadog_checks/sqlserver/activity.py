@@ -56,7 +56,6 @@ SELECT
     c.client_tcp_port as client_port,
     c.client_net_address as client_address,
     sess.host_name as host_name,
-    (SELECT IIF (EXISTS (SELECT 1 FROM sys.dm_exec_procedure_stats WHERE object_id = qt.objectid), 1, 0)) as is_proc,
     {exec_request_columns}
 FROM sys.dm_exec_sessions sess
     INNER JOIN sys.dm_exec_connections c
@@ -212,7 +211,7 @@ class SqlserverActivity(DBMAsyncJob):
             statement = obfuscate_sql_with_metadata(row['statement_text'], self.check.obfuscator_options)
             procedure_statement = None
             # sqlserver doesn't have a boolean data type so convert integer to boolean
-            row['is_proc'] = row['is_proc'] == 1
+            row['is_proc'] = self._get_stmt_is_proc(row['text'])
             if row['is_proc'] and 'text' in row:
                 procedure_statement = obfuscate_sql_with_metadata(row['text'], self.check.obfuscator_options)
             obfuscated_statement = statement['query']
@@ -235,6 +234,13 @@ class SqlserverActivity(DBMAsyncJob):
     @staticmethod
     def _remove_null_vals(row):
         return {key: val for key, val in row.items() if val is not None}
+
+    # checks if statement_text is part of a stored procedure
+    @staticmethod
+    def _get_stmt_is_proc(text):
+        if text:
+            return "CREATE PROCEDURE" in text
+        return False
 
     @staticmethod
     def _sanitize_row(row, obfuscated_statement):
