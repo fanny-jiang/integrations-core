@@ -345,6 +345,9 @@ jobs:
     - checkName: network
       displayName: Network (Windows)
       os: windows
+    - checkName: new_int
+      displayName: New_Int
+      os: linux
     - checkName: nfsstat
       displayName: NFSstat
       os: linux
