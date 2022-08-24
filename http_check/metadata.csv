@@ -5,3 +5,4 @@ network.http.cant_connect,gauge,,,,"Whether the check failed to connect, 1 if tr
 http.ssl.days_left,gauge,,day,,Days until SSL certificate expiration,1,network,days till expiration,
 http.ssl.seconds_left,gauge,,second,,Seconds until SSL certificate expiration,1,network,seconds till expiration,
 http.ssl.seconds,gauge,,second,,Seconds until SSL certificate expiration,1,network,seconds till expiration,
+http.ssl.seconds_behind,gauge,,second,,Seconds until SSL certificate expiration,1,network,seconds till expiration,
