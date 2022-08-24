@@ -6,6 +6,7 @@ on:
 
 jobs:
   apply:
+    if: github.repository == 'fanny-jiang/integrations-core'
     runs-on: ubuntu-latest
     permissions:
       contents: read
