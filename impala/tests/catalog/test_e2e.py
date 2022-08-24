@@ -7,23 +7,18 @@ import pytest
 from datadog_checks.dev.utils import get_metadata_metrics
 from datadog_checks.impala import ImpalaCheck
 
+from .common import METRICS, TAGS
+
 
 @pytest.mark.e2e
 def test_catalog_check_e2e_assert_metrics(dd_agent_check, catalog_instance):
     aggregator = dd_agent_check(catalog_instance, rate=True)
 
-    expected_metrics = [
-        {
-            "name": "impala.catalog.jvm.gc.count",
-            "type": aggregator.COUNT,
-        },
-    ]
-
-    for expected_metric in expected_metrics:
+    for expected_metric in METRICS:
         aggregator.assert_metric(
             name=expected_metric["name"],
             metric_type=expected_metric.get("type", aggregator.GAUGE),
-            tags=expected_metric.get("tags", ["endpoint:http://localhost:25020/metrics_prometheus"]),
+            tags=expected_metric.get("tags", TAGS),
         )
 
     aggregator.assert_all_metrics_covered()
@@ -35,7 +30,7 @@ def test_catalog_check_e2e_assert_service_check(dd_agent_check, catalog_instance
     aggregator.assert_service_check(
         "impala.catalog.openmetrics.health",
         status=ImpalaCheck.OK,
-        tags=['endpoint:http://localhost:25020/metrics_prometheus'],
+        tags=TAGS,
     )
 
 

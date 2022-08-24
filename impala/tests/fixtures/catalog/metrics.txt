@@ -212,7 +212,7 @@ impala_jvm_ps_old_gen_peak_committed_usage_bytes 88080384
 impala_jvm_ps_old_gen_peak_current_usage_bytes 8830616
 # HELP impala_jvm_gc_num_warn_threshold_exceeded Jvm Pause Detection Warning Threshold Exceeded
 # TYPE impala_jvm_gc_num_warn_threshold_exceeded counter
-impala_jvm_gc_num_warn_threshold_exceeded 0
+impala_jvm_gc_num_warn_threshold_exceeded 55
 # HELP impala_jvm_non_heap_max_usage_bytes Jvm non-heap Max Usage Bytes
 # TYPE impala_jvm_non_heap_max_usage_bytes gauge
 impala_jvm_non_heap_max_usage_bytes -1
@@ -224,7 +224,7 @@ impala_jvm_ps_old_gen_peak_max_usage_bytes 1431830528
 impala_jvm_ps_old_gen_current_usage_bytes 8830616
 # HELP impala_jvm_gc_num_info_threshold_exceeded Jvm Pause Detection Info Threshold Exceeded
 # TYPE impala_jvm_gc_num_info_threshold_exceeded counter
-impala_jvm_gc_num_info_threshold_exceeded 0
+impala_jvm_gc_num_info_threshold_exceeded 12
 # HELP impala_jvm_ps_survivor_space_peak_committed_usage_bytes Jvm ps-survivor-space Peak Committed Usage Bytes
 # TYPE impala_jvm_ps_survivor_space_peak_committed_usage_bytes gauge
 impala_jvm_ps_survivor_space_peak_committed_usage_bytes 10485760
@@ -404,7 +404,7 @@ impala_jvm_ps_eden_space_init_usage_bytes 33554432
 impala_tcmalloc_physical_bytes_reserved 58187776
 # HELP impala_tcmalloc_pageheap_free_bytes Number of bytes in free, mapped pages in page heap. These bytes can be used to fulfill allocation requests. They always count towards virtual memory usage, and unless the underlying memory is swapped out by the OS, they also count towards physical memory usage.
 # TYPE impala_tcmalloc_pageheap_free_bytes gauge
-impala_tcmalloc_pageheap_free_bytes 0
+impala_tcmalloc_pageheap_free_bytes 10
 # HELP impala_tcmalloc_pageheap_unmapped_bytes Number of bytes in free, unmapped pages in page heap. These are bytes that have been released back to the OS, possibly by one of the MallocExtension "Release" calls. They can be used to fulfill allocation requests, but typically incur a page fault. They always count towards virtual memory usage, and depending on the OS, typically do not count towards physical memory usage.
 # TYPE impala_tcmalloc_pageheap_unmapped_bytes gauge
 impala_tcmalloc_pageheap_unmapped_bytes 14565376

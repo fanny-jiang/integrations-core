@@ -7,25 +7,19 @@ import pytest
 from datadog_checks.dev.utils import get_metadata_metrics
 from datadog_checks.impala import ImpalaCheck
 
+from .common import METRICS, TAGS
+
 
 @pytest.mark.integration
 @pytest.mark.usefixtures("dd_environment")
-def test_catalog_check_integration_assert_metrics(dd_run_check, aggregator, catalog_instance):
-    check = ImpalaCheck("impala", {}, [catalog_instance])
-    dd_run_check(check)
+def test_catalog_check_integration_assert_metrics(dd_run_check, aggregator, catalog_check):
+    dd_run_check(catalog_check)
 
-    expected_metrics = [
-        {
-            "name": "impala.catalog.jvm.gc.count",
-            "type": aggregator.MONOTONIC_COUNT,
-        },
-    ]
-
-    for expected_metric in expected_metrics:
+    for expected_metric in METRICS:
         aggregator.assert_metric(
             name=expected_metric["name"],
             metric_type=expected_metric.get("type", aggregator.GAUGE),
-            tags=expected_metric.get("tags", ["endpoint:http://localhost:25020/metrics_prometheus"]),
+            tags=expected_metric.get("tags", TAGS),
         )
 
     aggregator.assert_all_metrics_covered()
@@ -34,19 +28,17 @@ def test_catalog_check_integration_assert_metrics(dd_run_check, aggregator, cata
 
 @pytest.mark.integration
 @pytest.mark.usefixtures("dd_environment")
-def test_catalog_check_integration_assert_service_check(dd_run_check, aggregator, catalog_instance):
-    check = ImpalaCheck("impala", {}, [catalog_instance])
-    dd_run_check(check)
+def test_catalog_check_integration_assert_service_check(dd_run_check, aggregator, catalog_check):
+    dd_run_check(catalog_check)
     aggregator.assert_service_check(
         "impala.catalog.openmetrics.health",
         status=ImpalaCheck.OK,
-        tags=['endpoint:http://localhost:25020/metrics_prometheus'],
+        tags=TAGS,
     )
 
 
 @pytest.mark.integration
 @pytest.mark.usefixtures("dd_environment")
-def test_catalog_check_integration_assert_metrics_using_metadata(dd_run_check, aggregator, catalog_instance):
-    check = ImpalaCheck("impala", {}, [catalog_instance])
-    dd_run_check(check)
+def test_catalog_check_integration_assert_metrics_using_metadata(dd_run_check, aggregator, catalog_check):
+    dd_run_check(catalog_check)
     aggregator.assert_metrics_using_metadata(get_metadata_metrics())

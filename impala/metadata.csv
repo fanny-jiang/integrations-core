@@ -1,6 +1,11 @@
 metric_name,metric_type,interval,unit_name,per_unit_name,description,orientation,integration,short_name,curated_metric
 impala.daemon.jvm.gc.count,count,,,,[Daemon] Jvm Garbage Collection Count.,0,impala,daemon gc count,
-impala.catalog.jvm.gc.count,count,,,,[Catalog] Jvm Garbage Collection Count.,0,impala,catalog gc count,
+impala.catalog.jvm.gc.count,count,,,,[Catalog] Jvm Garbage Collection Count.,0,impala,ct gc count,
+impala.catalog.tcmalloc.physical_reserved,gauge,,byte,,"[Catalog] Derived metric computing the amount of physical memory (in bytes) used by the process, including that actually in use and free bytes reserved by tcmalloc. Does not include the tcmalloc metadata.",0,impala,ct tc ph res,
+impala.catalog.tcmalloc.in_use,gauge,,byte,,"[Catalog] Number of bytes used by the application. This will not typically match the memory use reported by the OS, because it does not include TCMalloc overhead or memory fragmentation.",0,impala,ct tc use,
+impala.catalog.tcmalloc.total_reserved,gauge,,byte,,[Catalog] Bytes of system memory reserved by TCMalloc.,0,impala,ct tc tot res,
+impala.catalog.tcmalloc.pageheap.free,gauge,,byte,,"[Catalog] Number of bytes in free, mapped pages in page heap. These bytes can be used to fulfill allocation requests. They always count towards virtual memory usage, and unless the underlying memory is swapped out by the OS, they also count towards physical memory usage.",0,impala,ct ph free,
+impala.catalog.tcmalloc.pageheap.unmapped,gauge,,byte,,"[Catalog] Number of bytes in free, mapped pages in page heap. These bytes can be used to fulfill allocation requests. They always count towards virtual memory usage, and unless the underlying memory is swapped out by the OS, they also count towards physical memory usage.",0,impala,ct ph unmapped,
 impala.statestore.live_backends,gauge,,,,[Statestore] The number of registered Statestore subscribers.,0,impala,st live backends,
 impala.statestore.total_key_size,gauge,,,,[Statestore] The sum of the size of all keys for all topics tracked by the StateStore.,0,impala,st total key size,
 impala.statestore.total_value_size,gauge,,,,[Statestore] The sum of the size of all values for all topics tracked by the StateStore.,0,impala,st total value size,

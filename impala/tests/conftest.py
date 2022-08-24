@@ -76,6 +76,11 @@ def catalog_instance():
     }
 
 
+@pytest.fixture
+def catalog_check(catalog_instance):
+    return ImpalaCheck("impala", {}, [catalog_instance])
+
+
 @pytest.fixture()
 def mock_metrics(request):
     metrics_file = request.node.get_closest_marker("metrics_file")
