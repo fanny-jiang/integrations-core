@@ -5,15 +5,6 @@ on:
 - pull_request
 
 jobs:
-  apply:
-    if: github.repository == 'fanny-jiang/integrations-core'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
-    steps:
-    - name: Add labels
-      uses: actions/labeler@v4
-      with:
-        repo-token: "${{ secrets.GITHUB_TOKEN }}"
-        configuration-path: .github/workflows/config/labeler.yml
+  labeler:
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
+    uses: .github/workflows/labeler-reusable.yml
