@@ -2,10 +2,11 @@
 
 name: PR Labels
 on:
-- pull_request
+- pull_request_target
 
 jobs:
   apply:
+    if: github.repository != 'DataDog/integrations-core'
     runs-on: ubuntu-latest
     permissions:
       contents: read
