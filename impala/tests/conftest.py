@@ -8,6 +8,7 @@ import pytest
 
 from datadog_checks.dev import docker_run, get_docker_hostname, get_here
 from datadog_checks.dev.conditions import CheckDockerLogs
+from datadog_checks.impala import ImpalaCheck
 
 
 def pytest_configure(config):
@@ -60,6 +61,11 @@ def statestore_instance():
         "openmetrics_endpoint": f"http://{get_docker_hostname()}:25010/metrics_prometheus",
         "service_type": "statestore",
     }
+
+
+@pytest.fixture
+def statestore_check(statestore_instance):
+    return ImpalaCheck("impala", {}, [statestore_instance])
 
 
 @pytest.fixture
