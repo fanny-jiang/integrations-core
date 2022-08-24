@@ -262,6 +262,8 @@ integration/nagios:
 - nagios/**/*
 integration/network:
 - network/**/*
+integration/new_int:
+- new_int/**/*
 integration/nfsstat:
 - nfsstat/**/*
 integration/nginx:

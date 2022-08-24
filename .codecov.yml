@@ -374,6 +374,10 @@ coverage:
         target: 75
         flags:
         - network
+      New_Int:
+        target: 75
+        flags:
+        - new_int
       OpenLDAP:
         target: 75
         flags:
@@ -1059,6 +1063,11 @@ flags:
     paths:
     - network/datadog_checks/network
     - network/tests
+  new_int:
+    carryforward: true
+    paths:
+    - new_int/datadog_checks/new_int
+    - new_int/tests
   nfsstat:
     carryforward: true
     paths:
