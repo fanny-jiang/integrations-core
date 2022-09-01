@@ -1,6 +1,6 @@
 # Contributing
 
-First of all, thanks for contributing!
+First of all, thanks for contributing! Hello!
 
 This document provides some basic guidelines for contributing to this repository.
 To propose improvements, feel free to submit a PR.
