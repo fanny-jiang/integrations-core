@@ -154,6 +154,7 @@ integration/gitlab:
 - gitlab/**/*
 integration/gitlab_runner:
 - gitlab_runner/**/*
+- gitlab_runner/*
 integration/gke:
 - gke/**/*
 integration/glusterfs:
