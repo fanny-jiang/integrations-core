@@ -146,7 +146,6 @@ class KafkaCheck(AgentCheck):
             api_version=kafka_version,
             # While we check for SASL/SSL params, if not present they will default to the kafka-python values for
             # plaintext connections
-            # plaintext connections
             security_protocol=self.instance.get('security_protocol', 'PLAINTEXT'),
             sasl_mechanism=self.instance.get('sasl_mechanism'),
             sasl_plain_username=self.instance.get('sasl_plain_username'),

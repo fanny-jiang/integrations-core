@@ -33,7 +33,7 @@ def mocked_read_persistent_cache(cache_key):
 
 
 def mocked_time():
-    return 500
+    return 400
 
 
 @pytest.mark.unit
