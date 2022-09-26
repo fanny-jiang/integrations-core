@@ -22,7 +22,7 @@ mongodb.dur.journaledmb,gauge,,mebibyte,,Amount of data written to journal durin
 mongodb.dur.timems.commits,gauge,,millisecond,,Amount of time spent for commits.,-1,mongodb,dur time ms commits,
 mongodb.dur.timems.commitsinwritelock,gauge,,millisecond,,Amount of time spent for commits that occurred while a write lock was held.,-1,mongodb,dur time ms commits in write lock,
 mongodb.dur.timems.dt,gauge,,millisecond,,Amount of time over which MongoDB collected the `dur.timeMS` data.,-1,mongodb,dur time ms dt,
-mongodb.dur.timems.preplogbuffer,gauge,,millisecond,,Amount of time spent preparing to write to the journal. ,-1,mongodb,dur time ms prep log buffer,
+mongodb.dur.timems.preplogbuffer,gauge,,millisecond,,Amount of time spent prepariafdfdng to write to the journal. ,-1,mongodb,dur time ms prep log buffer,
 mongodb.dur.timems.remapprivateview,gauge,,millisecond,,Amount of time spent remapping copy-on-write memory mapped views.,-1,mongodb,dur time ms remap private view,
 mongodb.dur.timems.writetodatafiles,gauge,,millisecond,,Amount of time spent writing to data files after journaling.,-1,mongodb,dur time ms write to data files,
 mongodb.dur.timems.writetojournal,gauge,,millisecond,,Amount of time spent writing to the journal,-1,mongodb,dur time ms write to journal,
