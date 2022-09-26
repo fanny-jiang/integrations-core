@@ -26,7 +26,6 @@ def _assert_metrics(aggregator, metrics_categories, additional_tags=None):
 
 
 def test_integration_mongos(instance_integration, aggregator, check, dd_run_check):
-    # test test
     mongos_check = check(instance_integration)
     mongos_check._last_states_by_server = {0: 1, 1: 2, 2: 2}
 
