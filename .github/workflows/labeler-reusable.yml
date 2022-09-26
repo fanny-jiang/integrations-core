@@ -14,8 +14,8 @@ jobs:
       pull-requests: write
     steps:
       - name: Add labels
-        uses: fanny-jiang/labeler@master
+        uses: actions/labeler@v4
         with:
           configuration-path: .github/workflows/config/labeler.yml
           repo-token: "${{ secrets.repo-token }}"
-          sync-labels: false
+          sync-labels: ''
